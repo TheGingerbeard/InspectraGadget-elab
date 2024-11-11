@@ -26,5 +26,4 @@ To package as .exe with pyinstaller:
 * Fitting of line graphs. Currently fits are only avaialble for linecuts from colorplots
 * Change linked folder behavior, currently it loads all data into memory it would be better to only store the directories and load files as needed.
 
-# Known Issues
-* Trying to plot the return sweep from a measurement where the inner loop sweeps both directions causes a crash because the snapshot has 3 independent parameters but each dataset only has 2.
+
