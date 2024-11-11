@@ -15,9 +15,9 @@ To package as .exe with pyinstaller:
 2. Install pyinstaller if you haven't already
 > pip install -U pyinstaller
 
-2. Navigate to the Inpsectra gadget directory
+3. Navigate to the Inpsectra gadget directory
 > cd [Your-directory]\Inpectra-Gadget-master
 
-3. Run the following pyinstaller command, make sure the qcodes installation directory is correct
+4. Run the following pyinstaller command, make sure the qcodes installation directory is correct
 >pyinstaller --onefile --add-data design.ui:. --add-data C:\git\qcodes-elab\qcodes:qcodes --name InspectraGadget --icon iconGadget.png main.py
 
