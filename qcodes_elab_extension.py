@@ -17,7 +17,7 @@ class ElabData(main.BaseClassData):
         # timestamp = self.meta['timestamp'].split(' ')[1]
 
         self.label = f'{dirname}'
-        # self.dataset = dataset
+        self.dataset = qc.load_data(self.filepath)
         # self.raw_data = None
         
 
@@ -36,7 +36,7 @@ class ElabData(main.BaseClassData):
 
        
 
-        self.load_dataset()
+        self.prepare_dataset()
         # Default to conductance as dependent variable if present.
         if "conductance" in self.dependent_parameter_names:
             self.index_dependent_parameter = self.dependent_parameter_names.index("conductance")
@@ -53,8 +53,8 @@ class ElabData(main.BaseClassData):
     
 
 
-    def load_dataset(self):
-        self.dataset = qc.load_data(self.filepath)
+    def prepare_dataset(self):
+        
         self.data_dict = self.dataset.arrays
         pars = list(self.data_dict.keys())
         self.dims = self.data_dict[pars[1]].shape
@@ -81,7 +81,7 @@ class ElabData(main.BaseClassData):
 
     
     def get_column_data(self):
-        self.load_dataset()
+        self.prepare_dataset()
         if len(self.independent_parameters) == 1: # data is 2D
             column_data = np.column_stack((self.data_dict[self.all_parameters[self.index_x]["array_id"]],
                                            self.data_dict[self.dependent_parameters[self.index_dependent_parameter]["array_id"]]))
@@ -156,10 +156,10 @@ class ElabData(main.BaseClassData):
     def identify_independent_vars(self):
         
         for chan in self.channels.keys():
-            if self.channels[chan]["is_setpoint"]:
+            if self.channels[chan]["is_setpoint"] and self.channels[chan]["array_id"] in list(self.dataset.arrays.keys()):
                 self.independent_parameters.append(self.channels[chan])
                 self.independent_parameter_names.append(self.channels[chan]["name"])
-            else:
+            elif self.channels[chan]["array_id"] in list(self.dataset.arrays.keys()):
                 self.dependent_parameters.append(self.channels[chan])
                 self.dependent_parameter_names.append(self.channels[chan]["name"])
 
@@ -171,22 +171,22 @@ class ElabData(main.BaseClassData):
     def add_extension_actions(self, editor, menu):
         if len(self.independent_parameters) > 1:
             channel_menu = menu.addMenu('Select Z...')
-            for par in self.channels:
-                par_name = self.channels[par]["name"]
+            for par in self.all_parameter_names:
+                par_name = par
                 action = QtWidgets.QAction(par_name, editor)
                 action.setData("z")
                 channel_menu.addAction(action)
         
         channel_menu = menu.addMenu('Select X...')
-        for par in self.channels:
-            par_name = self.channels[par]["name"]
+        for par in self.all_parameter_names:
+            par_name = par
             action = QtWidgets.QAction(par_name, editor)
             action.setData("x")
             channel_menu.addAction(action) 
 
         channel_menu = menu.addMenu('Select Y...')
-        for par in self.channels:
-            par_name = self.channels[par]["name"]
+        for par in self.all_parameter_names:
+            par_name = par
             action = QtWidgets.QAction(par_name, editor)
             action.setData("y")
             channel_menu.addAction(action) 
