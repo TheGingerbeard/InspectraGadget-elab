@@ -21,6 +21,9 @@ To package as .exe with pyinstaller:
 4. Run the following pyinstaller command, make sure the qcodes installation directory is correct
 >pyinstaller --onefile --add-data design.ui:. --add-data C:\git\qcodes-elab\qcodes:qcodes --name InspectraGadget --icon iconGadget.png main.py
 
+# Known issues
+* If dataset contains multiple arrays with the same name, only the first instance can be selected for plotting. Might need to switch to array_id for selectionas those are unique, but can look ugly
+
 # Planned updates
 * Add a settings menu to change some hardcoded settings like darkmode/lightmode, auto refresh interval, etc,
 * Fitting of line graphs. Currently fits are only avaialble for linecuts from colorplots
