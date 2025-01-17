@@ -48,7 +48,8 @@ class ElabData(main.BaseClassData):
         self.index_x = 0
         self.index_y = 1
 
-        self.dataset_id = "#" + self.dataset.location.split("_", 1)[0].split("#", 1)[1]
+        self.dataset_id = "#" + self.dataset.location.split("#", 1)[1].split("_", 1)[0]
+        # self.dataset_id = "test"
         self.settings["title"] = self.dataset_id
     
 
@@ -89,7 +90,7 @@ class ElabData(main.BaseClassData):
             self.settings["xlabel"] = "{} ({})".format(self.independent_parameters[0]["label"], self.independent_parameters[0]["unit"])
             self.settings["ylabel"] = "{} ({})".format(self.dependent_parameters[self.index_dependent_parameter]["label"], self.dependent_parameters[self.index_dependent_parameter]["unit"])
 
-        else: # data is 3D
+        elif len(self.independent_parameters) == 2: # data is 3D
            
             column_data = np.column_stack((self.data_dict[self.all_parameters[self.index_x]["array_id"]].flatten(),
                                          self.data_dict[self.all_parameters[self.index_y]["array_id"]].flatten(),
@@ -107,6 +108,9 @@ class ElabData(main.BaseClassData):
                 column_data = column_data[~np.isnan(column_data).any(axis=1)]
                 column_data = column_data[~np.isnan(column_data[:,0])]
                 column_data = column_data[:self.dims[0]*self.dims[1]]
+
+        else:
+            return np.empty((1,1))
           
         self.measured_data_points = column_data.shape[0]
 
@@ -158,10 +162,10 @@ class ElabData(main.BaseClassData):
         for chan in self.channels.keys():
             if self.channels[chan]["is_setpoint"] and self.channels[chan]["array_id"] in list(self.dataset.arrays.keys()):
                 self.independent_parameters.append(self.channels[chan])
-                self.independent_parameter_names.append(self.channels[chan]["name"])
+                self.independent_parameter_names.append(self.channels[chan]["array_id"])
             elif self.channels[chan]["array_id"] in list(self.dataset.arrays.keys()):
                 self.dependent_parameters.append(self.channels[chan])
-                self.dependent_parameter_names.append(self.channels[chan]["name"])
+                self.dependent_parameter_names.append(self.channels[chan]["array_id"])
 
         self.all_parameters = self.independent_parameters + self.dependent_parameters
         self.all_parameter_names = self.independent_parameter_names + self.dependent_parameter_names
