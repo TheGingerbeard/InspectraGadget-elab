@@ -22,7 +22,7 @@ To package as .exe with pyinstaller:
 >pyinstaller --onefile --add-data design.ui:. --add-data C:\git\qcodes-elab\qcodes:qcodes --name InspectraGadget --icon iconGadget.png main.py
 
 # Known issues
-* If dataset contains multiple arrays with the same name, only the first instance can be selected for plotting. Might need to switch to array_id for selectionas those are unique, but can look ugly
+* Linking a folder with many datasets takes up the entire memory. Refer to point 3 in planned updates.
 
 # Planned updates
 * Add a settings menu to change some hardcoded settings like darkmode/lightmode, auto refresh interval, etc,
