@@ -1456,6 +1456,9 @@ class BaseClassData:
                 self.creation_time = os.stat(filepath).st_birthtime
             except Exception:
                 self.creation_time = None
+
+    def load_dataset(self):
+        return 0
         
     def get_column_data(self):
         column_data = np.genfromtxt(self.filepath, delimiter=self.settings['delimiter'])
