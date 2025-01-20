@@ -17,6 +17,8 @@ class ElabData(main.BaseClassData):
         # timestamp = self.meta['timestamp'].split(' ')[1]
 
         self.label = f'{dirname}'
+
+    def load_dataset(self):
         self.dataset = qc.load_data(self.filepath)
         # self.raw_data = None
         

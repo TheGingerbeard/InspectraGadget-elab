@@ -387,6 +387,7 @@ class Editor(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def file_checked(self, item):
         if item.checkState() == 2:
             self.file_list.setCurrentItem(item)
+            item.data.load_dataset()
         self.update_plots()
     
     def file_clicked(self):
