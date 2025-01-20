@@ -2059,7 +2059,8 @@ class LineCutWindow(QtWidgets.QWidget):
         self.canvas.draw()
         if DARK_THEME and qdarkstyle_imported:
             rcParams_to_light_theme()
-            self.parent.update()           
+            self.update()
+                
         buf = io.BytesIO()
         self.figure.savefig(buf, dpi=300, transparent=True, bbox_inches='tight')
         QtWidgets.QApplication.clipboard().setImage(QtGui.QImage.fromData(buf.getvalue()))
