@@ -22,11 +22,11 @@ To package as .exe with pyinstaller:
 >pyinstaller --onefile --add-data design.ui:. --add-data C:\git\qcodes-elab\qcodes:qcodes --name InspectraGadget --icon iconGadget.png main.py
 
 # Known issues
-* Linking a folder with many datasets takes up the entire memory. Refer to point 3 in planned updates.
+* Only unknown ones for now.
 
 # Planned updates
 * Add a settings menu to change some hardcoded settings like darkmode/lightmode, auto refresh interval, etc,
 * Fitting of line graphs. Currently fits are only avaialble for linecuts from colorplots
-* Change linked folder behavior, currently it loads all data into memory it would be better to only store the directories and load files as needed.
+
 
 
